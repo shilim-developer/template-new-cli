@@ -1,0 +1,151 @@
+diff --git a/node_modules/prompts/lib/elements/autocomplete.js b/node_modules/prompts/lib/elements/autocomplete.js
+index 8e06da2..93865a4 100644
+--- a/node_modules/prompts/lib/elements/autocomplete.js
++++ b/node_modules/prompts/lib/elements/autocomplete.js
+@@ -217,8 +217,8 @@ class AutocompletePrompt extends Prompt {
+   renderOption(v, hovered, isStart, isEnd) {
+     let desc;
+     let prefix = isStart ? figures.arrowUp : isEnd ? figures.arrowDown : ' ';
+-    let title = hovered ? color.cyan().underline(v.title) : v.title;
+-    prefix = (hovered ? color.cyan(figures.pointer) + ' ' : '  ') + prefix;
++    let title = hovered ? color.green().underline(v.title) : v.title;
++    prefix = (hovered ? color.green(figures.pointer) + ' ' : '  ') + prefix;
+     if (v.description) {
+       desc = ` - ${v.description}`;
+       if (prefix.length + title.length + desc.length >= this.out.columns
+diff --git a/node_modules/prompts/lib/elements/autocompleteMultiselect.js b/node_modules/prompts/lib/elements/autocompleteMultiselect.js
+index b64510f..058dc5b 100644
+--- a/node_modules/prompts/lib/elements/autocompleteMultiselect.js
++++ b/node_modules/prompts/lib/elements/autocompleteMultiselect.js
+@@ -146,7 +146,7 @@ Filtered results for: ${this.inputValue ? this.inputValue : color.gray('Enter so
+   renderOption(cursor, v, i) {
+     let title;
+     if (v.disabled) title = cursor === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
+-    else title = cursor === i ? color.cyan().underline(v.title) : v.title;
++    else title = cursor === i ? color.green().underline(v.title) : v.title;
+     return (v.selected ? color.green(figures.radioOn) : figures.radioOff) + '  ' + title
+   }
+ 
+diff --git a/node_modules/prompts/lib/elements/date.js b/node_modules/prompts/lib/elements/date.js
+index 71ff608..c7d350d 100644
+--- a/node_modules/prompts/lib/elements/date.js
++++ b/node_modules/prompts/lib/elements/date.js
+@@ -192,7 +192,7 @@ class DatePrompt extends Prompt {
+       style.symbol(this.done, this.aborted),
+       color.bold(this.msg),
+       style.delimiter(false),
+-      this.parts.reduce((arr, p, idx) => arr.concat(idx === this.cursor && !this.done ? color.cyan().underline(p.toString()) : p), [])
++      this.parts.reduce((arr, p, idx) => arr.concat(idx === this.cursor && !this.done ? color.green().underline(p.toString()) : p), [])
+           .join('')
+     ].join(' ');
+ 
+diff --git a/node_modules/prompts/lib/elements/multiselect.js b/node_modules/prompts/lib/elements/multiselect.js
+index 99b393f..a3a1e96 100644
+--- a/node_modules/prompts/lib/elements/multiselect.js
++++ b/node_modules/prompts/lib/elements/multiselect.js
+@@ -185,7 +185,7 @@ class MultiselectPrompt extends Prompt {
+     if (v.disabled) {
+       title = cursor === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
+     } else {
+-      title = cursor === i ? color.cyan().underline(v.title) : v.title;
++      title = cursor === i ? color.green().underline(v.title) : v.title;
+       if (cursor === i && v.description) {
+         desc = ` - ${v.description}`;
+         if (prefix.length + title.length + desc.length >= this.out.columns
+diff --git a/node_modules/prompts/lib/elements/number.js b/node_modules/prompts/lib/elements/number.js
+index dc3efe9..6992064 100644
+--- a/node_modules/prompts/lib/elements/number.js
++++ b/node_modules/prompts/lib/elements/number.js
+@@ -39,7 +39,7 @@ class NumberPrompt extends Prompt {
+     this.max = isDef(opts.max) ? opts.max : Infinity;
+     this.errorMsg = opts.error || `Please Enter A Valid Value`;
+     this.validator = opts.validate || (() => true);
+-    this.color = `cyan`;
++    this.color = `green`;
+     this.value = ``;
+     this.typed = ``;
+     this.lastHit = 0;
+@@ -128,7 +128,7 @@ class NumberPrompt extends Prompt {
+     }
+     if (this.value >= this.max) return this.bell();
+     this.value += this.inc;
+-    this.color = `cyan`;
++    this.color = `green`;
+     this.fire();
+     this.render();
+   }
+@@ -140,7 +140,7 @@ class NumberPrompt extends Prompt {
+     }
+     if (this.value <= this.min) return this.bell();
+     this.value -= this.inc;
+-    this.color = `cyan`;
++    this.color = `green`;
+     this.fire();
+     this.render();
+   }
+@@ -152,7 +152,7 @@ class NumberPrompt extends Prompt {
+     if (this.value !== '' && this.value < this.min) {
+       this.value = this.min;
+     }
+-    this.color = `cyan`;
++    this.color = `green`;
+     this.fire();
+     this.render();
+   }
+@@ -170,7 +170,7 @@ class NumberPrompt extends Prompt {
+     if (now - this.lastHit > 1000) this.typed = ``; // 1s elapsed
+     this.typed += c;
+     this.lastHit = now;
+-    this.color = `cyan`;
++    this.color = `green`;
+ 
+     if (c === `.`) return this.fire();
+ 
+diff --git a/node_modules/prompts/lib/elements/select.js b/node_modules/prompts/lib/elements/select.js
+index 6d6727f..d86eafc 100644
+--- a/node_modules/prompts/lib/elements/select.js
++++ b/node_modules/prompts/lib/elements/select.js
+@@ -150,11 +150,11 @@ class SelectPrompt extends Prompt {
+         }
+ 
+         if (v.disabled) {
+-          title = this.cursor === i ? color.gray().underline(v.title) : color.strikethrough().gray(v.title);
++          title = this.cursor === i ? color.gray(v.title) : color.strikethrough().gray(v.title);
+           prefix = (this.cursor === i ? color.bold().gray(figures.pointer) + ' ' : '  ') + prefix;
+         } else {
+-          title = this.cursor === i ? color.cyan().underline(v.title) : v.title;
+-          prefix = (this.cursor === i ? color.cyan(figures.pointer) + ' ' : '  ') + prefix;
++          title = this.cursor === i ? color.green(v.title) : v.title;
++          prefix = (this.cursor === i ? color.green(figures.pointer) + ' ' : '  ') + prefix;
+           if (v.description && this.cursor === i) {
+             desc = ` - ${v.description}`;
+             if (prefix.length + title.length + desc.length >= this.out.columns
+diff --git a/node_modules/prompts/lib/elements/toggle.js b/node_modules/prompts/lib/elements/toggle.js
+index bad612c..3ccc4ec 100644
+--- a/node_modules/prompts/lib/elements/toggle.js
++++ b/node_modules/prompts/lib/elements/toggle.js
+@@ -106,9 +106,9 @@ class TogglePrompt extends Prompt {
+       style.symbol(this.done, this.aborted),
+       color.bold(this.msg),
+       style.delimiter(this.done),
+-      this.value ? this.inactive : color.cyan().underline(this.inactive),
++      this.value ? this.inactive : color.green().underline(this.inactive),
+       color.gray('/'),
+-      this.value ? color.cyan().underline(this.active) : this.active
++      this.value ? color.green().underline(this.active) : this.active
+     ].join(' ');
+ 
+     this.out.write(erase.line + cursor.to(0) + this.outputText);
+diff --git a/node_modules/prompts/lib/util/style.js b/node_modules/prompts/lib/util/style.js
+index 1851cc7..2a98bf6 100644
+--- a/node_modules/prompts/lib/util/style.js
++++ b/node_modules/prompts/lib/util/style.js
+@@ -17,7 +17,7 @@ const symbols = Object.freeze({
+   aborted: c.red(figures.cross),
+   done: c.green(figures.tick),
+   exited: c.yellow(figures.cross),
+-  default: c.cyan('?')
++  default: c.green('?')
+ });
+ 
+ const symbol = (done, aborted, exited) =>

@@ -1,8 +1,10 @@
 <h1 align="center">template-new-cli</h1>
 
 <p align="center">
-  <a href="https://github.com/misitebao/yakia/blob/main/LICENSE">
-    <img alt="GitHub" src="https://img.shields.io/github/license/misitebao/yakia"/>
+  <img alt="GitHub" src="https://img.shields.io/github/package-json/v
+/shilim-developer/template-new-cli"/>
+  <a href="https://github.com/shilim-developer/template-new-cli/blob/master/LICENSE">
+    <img alt="GitHub" src="https://img.shields.io/github/license/shilim-developer/template-new-cli"/>
   </a>
 </p>
 

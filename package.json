@@ -7,7 +7,7 @@
     "tp-new": "./bin/index.cjs"
   },
   "scripts": {
-    "preinstall": "npx patch-package",
+    "postinstall": "patch-package",
     "test": "vitest",
     "changelog": "conventional-changelog -p normal -i CHANGELOG.md -s -r 0"
   },
@@ -17,15 +17,14 @@
     "type": "git",
     "url": "https://github.com/shilim-developer/template-new-cli"
   },
-  "devDependencies": {
-    "@babel/core": "^7.22.1",
-    "@babel/preset-env": "^7.22.2",
-    "@vitest/coverage-c8": "^0.31.4",
+  "dependencies":{
     "clet": "^1.0.1",
     "commander": "^10.0.1",
     "nunjucks": "^3.2.4",
     "patch-package": "^7.0.0",
-    "prompts": "2.4.2",
+    "prompts": "2.4.2"
+  },
+  "devDependencies": {
     "vitest": "^0.31.1"
   }
 }

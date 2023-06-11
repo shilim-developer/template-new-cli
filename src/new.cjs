@@ -71,14 +71,22 @@ function productCode(templateDir, outDir) {
     if (stats.isDirectory()) {
       // 创建文件夹
       fs.mkdirSync(newFilePath);
-      callback.newFolder && callback.newFolder(newFilePath);
+      try {
+        callback.newFolder && callback.newFolder(newFilePath, paramsObject);
+      } catch (error) {
+        console.log(error);
+      }
       return productCode(templatePath, newFilePath); // 递归读取文件夹
     } else if (!["@@config.js", "@@params.js"].includes(path.basename(file))) {
       // 过滤配置文件
       // 创建文件
       const content = render(templatePath, paramsObject);
       fs.writeFileSync(newFilePath, content);
-      callback.newFile && callback.newFile(newFilePath);
+      try {
+        callback.newFile && callback.newFile(newFilePath, paramsObject);
+      } catch (error) {
+        console.log(error);
+      }
     }
   });
 }
@@ -174,7 +182,11 @@ async function newFile(templateName, paramsPath) {
   }
   productCode(path.join(templatePath, answer), process.cwd());
   console.log(kleur.green(`✔ new completed!`));
-  callback.finish && callback.finish();
+  try {
+    callback.finish && callback.finish();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 exports.newFile = newFile;

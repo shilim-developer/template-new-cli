@@ -67,3 +67,49 @@ test("Use Params From File", async () => {
     .file(`helloworld.js`)
     .file("helloworld.js", "hello");
 });
+
+test("Use Params From File", async () => {
+  return runner()
+    .use(deleteMiddleware)
+    .cwd(execPath)
+    .spawn("tp-new new template_file", [
+      "-p ../../.templates/template_file/@@params.js",
+    ])
+    .file(`helloworld.js`)
+    .file("helloworld.js", "hello");
+});
+
+test("New Folder Callback", async () => {
+  return runner()
+    .use(deleteMiddleware)
+    .cwd(execPath)
+    .spawn("tp-new new template_folder")
+    .stdin(/component_name/, "shilim")
+    .stdin(/file_name/, "shilim")
+    .stdout(new RegExp(path.join(execPath, "shilim").replace(/\\/g, "\\\\")));
+});
+
+test("New File Callback", async () => {
+  return runner()
+    .use(deleteMiddleware)
+    .cwd(execPath)
+    .spawn("tp-new new template_file", [
+      "-p ../../.templates/template_file/@@params.js",
+    ])
+    .stdout(
+      new RegExp(path.join(execPath, "helloworld.js").replace(/\\/g, "\\\\"))
+    )
+    .stdout(
+      new RegExp(path.join(execPath, "tp-helloworld.js").replace(/\\/g, "\\\\"))
+    );
+});
+
+test("Finish Callback", async () => {
+  return runner()
+    .use(deleteMiddleware)
+    .cwd(execPath)
+    .spawn("tp-new new template_file", [
+      "-p ../../.templates/template_file/@@params.js",
+    ])
+    .stdout(/finish/);
+});
